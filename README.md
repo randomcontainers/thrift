@@ -113,6 +113,15 @@ gh attestation verify oci://ghcr.io/randomcontainers/thrift:latest \
   --repo randomcontainers/thrift --signer-repo randomcontainers/ci
 ```
 
+Images published since November 2026 also have a keyless cosign signature from the same workflow, for admission controllers that check cosign signatures. Tags last built before then have only the attestation.
+
+```sh
+cosign verify ghcr.io/randomcontainers/thrift:latest \
+  --certificate-identity https://github.com/randomcontainers/ci/.github/workflows/build.yml@refs/tags/v1 \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-github-workflow-repository randomcontainers/thrift
+```
+
 Each platform image also carries an SPDX SBOM that lists every distro package with its version:
 
 ```sh
